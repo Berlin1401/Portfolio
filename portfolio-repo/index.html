@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jacob Sikanyika — Health Admin &amp; Telehealth Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F6F2;
+    --ink:#122622;
+    --pine:#1F4B41;
+    --pine-deep:#0F2E27;
+    --gold:#B8863E;
+    --sage:#65746E;
+    --line:#D8DCD3;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+  a{color:inherit;}
+
+  /* ---------- Nav ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:28px 0;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:20px;
+    letter-spacing:-0.01em;
+  }
+  .logo span{color:var(--gold);}
+  nav a{
+    text-decoration:none;
+    font-size:14px;
+    color:var(--sage);
+    margin-left:28px;
+  }
+  nav a:hover{color:var(--pine);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:64px 0 40px;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:48px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px; background:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(34px, 4.4vw, 54px);
+    line-height:1.06;
+    letter-spacing:-0.015em;
+    color:var(--pine-deep);
+  }
+  h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--pine);
+  }
+  .hero p.lede{
+    margin-top:20px;
+    font-size:17px;
+    color:var(--sage);
+    max-width:46ch;
+  }
+  .cta-row{margin-top:30px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:500;
+    font-size:14.5px;
+    padding:13px 24px;
+    border-radius:2px;
+    text-decoration:none;
+    display:inline-block;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--pine-deep); color:var(--paper);}
+  .btn-primary:hover{background:var(--pine);}
+  .btn-ghost{border-color:var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--sage);}
+
+  /* ---------- Vitals signature strip ---------- */
+  .vitals{
+    position:relative;
+    height:86px;
+    margin:8px 0 6px;
+  }
+  .vitals svg{width:100%; height:100%; display:block;}
+  .vitals-readout{
+    position:absolute; top:6px; left:0;
+    display:flex; justify-content:space-between;
+    width:100%;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--sage);
+    letter-spacing:0.03em;
+  }
+
+  /* ---------- Credentials chart ---------- */
+  .chart-section{padding:8px 0 56px;}
+  .chart-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--sage);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .chart-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .chart-cell{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:20px 18px;
+  }
+  .chart-cell .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--gold);
+    margin-bottom:8px;
+  }
+  .chart-cell .name{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:16px;
+    color:var(--pine-deep);
+    line-height:1.3;
+  }
+
+  /* ---------- Services ---------- */
+  .services{padding:56px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:34px; gap:24px; flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(26px,3vw,36px);
+    color:var(--pine-deep);
+    max-width:20ch;
+  }
+  .section-head p{color:var(--sage); max-width:34ch; font-size:14.5px;}
+
+  .service-list{display:flex; flex-direction:column;}
+  .service{
+    display:grid;
+    grid-template-columns:70px 1fr 1.1fr;
+    gap:28px;
+    padding:30px 0;
+    border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .service:last-child{border-bottom:1px solid var(--line);}
+  .service .num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--gold);
+    font-size:13px;
+    padding-top:4px;
+  }
+  .service h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:21px;
+    color:var(--pine-deep);
+  }
+  .service .sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--sage);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-top:6px;
+  }
+  .service ul{
+    list-style:none;
+    color:var(--ink);
+    font-size:14.5px;
+  }
+  .service li{
+    padding:5px 0 5px 16px;
+    position:relative;
+    color:#33443E;
+  }
+  .service li::before{
+    content:"";
+    position:absolute; left:0; top:12px;
+    width:6px; height:1px; background:var(--gold);
+  }
+
+  /* ---------- About strip ---------- */
+  .about{
+    background:var(--pine-deep);
+    color:var(--paper);
+    padding:56px 0;
+    margin:56px 0;
+  }
+  .about .wrap{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  .about h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:26px;
+    line-height:1.35;
+  }
+  .about h2 em{color:var(--gold); font-style:italic;}
+  .about p{
+    font-size:14.5px;
+    color:#C7D6D1;
+    line-height:1.7;
+  }
+
+  /* ---------- Contact ---------- */
+  .contact{padding:20px 0 80px; text-align:center;}
+  .contact .eyebrow{justify-content:center;}
+  .contact .eyebrow::before{display:none;}
+  .contact h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(28px,3.6vw,42px);
+    color:var(--pine-deep);
+    max-width:22ch;
+    margin:0 auto 24px;
+  }
+  .contact-links{
+    display:flex; justify-content:center; gap:16px; flex-wrap:wrap;
+    margin-top:8px;
+  }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:26px 0;
+    font-size:12.5px;
+    color:var(--sage);
+    display:flex; justify-content:space-between;
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  @media (max-width: 760px){
+    .hero{grid-template-columns:1fr;}
+    .hero-visual{display:none;}
+    .chart-grid{grid-template-columns:repeat(2,1fr);}
+    .service{grid-template-columns:1fr; gap:8px;}
+    .about .wrap{grid-template-columns:1fr;}
+    nav{display:none;}
+  }
+
+  .skills-section{padding:0 0 56px;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    color:var(--sage);
+    background:var(--card);
+  }
+  .pill-accent{
+    border-color:var(--pine);
+    color:var(--pine-deep);
+    background:#EAF0EC;
+  }
+
+  /* ---------- Experience ---------- */
+  .experience{padding:56px 0;}
+  .exp-list{display:flex; flex-direction:column;}
+  .exp-item{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:24px;
+    padding:26px 0;
+    border-top:1px solid var(--line);
+  }
+  .exp-item:last-child{border-bottom:1px solid var(--line);}
+  .exp-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--gold);
+    padding-top:3px;
+  }
+  .exp-role{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:18px;
+    color:var(--pine-deep);
+  }
+  .exp-org{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--sage);
+    margin:4px 0 10px;
+  }
+  .exp-desc{font-size:14.5px; color:#33443E; max-width:60ch;}
+
+  /* ---------- Pricing ---------- */
+  .pricing{padding:56px 0;}
+  .price-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .price-card{
+    background:var(--card);
+    padding:32px 26px;
+    display:flex;
+    flex-direction:column;
+  }
+  .price-card.featured{background:var(--pine-deep); color:var(--paper);}
+  .price-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+  .price-card.featured .price-tag{color:#D9B372;}
+  .price-card h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:20px;
+    color:var(--pine-deep);
+    margin-bottom:6px;
+  }
+  .price-card.featured h3{color:var(--paper);}
+  .price-amount{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:30px;
+    margin:14px 0 4px;
+  }
+  .price-amount span{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13px;
+    font-weight:400;
+    color:var(--sage);
+  }
+  .price-card.featured .price-amount span{color:#A9C2BA;}
+  .price-card ul{
+    list-style:none;
+    margin:20px 0 26px;
+    flex-grow:1;
+  }
+  .price-card li{
+    font-size:13.5px;
+    padding:6px 0 6px 16px;
+    position:relative;
+    color:#33443E;
+  }
+  .price-card.featured li{color:#D4E1DC;}
+  .price-card li::before{
+    content:"";
+    position:absolute; left:0; top:12px;
+    width:6px; height:1px; background:var(--gold);
+  }
+  .price-card .btn{width:100%; text-align:center;}
+  .price-note{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--sage);
+    margin-top:18px;
+  }
+
+  @media (max-width: 760px){
+    .price-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="logo">Jacob Sikanyika<span>.</span></div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#work">Work</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+</div>
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Remote &middot; Health &amp; Compliance Admin</div>
+      <h1>Clinical background.<br><em>Virtual</em> delivery.</h1>
+      <p class="lede">I support clinics, telehealth platforms, and safety-conscious businesses remotely — bringing a Diploma in Clinical Medicine, Telehealth and Virtual Assistant certification, and Occupational Health &amp; Safety training to admin work that usually goes to generalists.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#contact">Book a discovery call</a>
+        <a class="btn btn-ghost" href="#services">View services</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <!-- decorative vitals mark -->
+      <svg viewBox="0 0 300 220" width="100%" height="100%">
+        <circle cx="150" cy="110" r="95" fill="none" stroke="#D8DCD3" stroke-width="1"/>
+        <circle cx="150" cy="110" r="66" fill="none" stroke="#D8DCD3" stroke-width="1"/>
+        <polyline points="40,110 95,110 112,70 130,150 148,90 165,130 182,110 260,110"
+          fill="none" stroke="#B8863E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="vitals">
+    <div class="vitals-readout">
+      <span>INTAKE</span><span>SCHEDULING</span><span>RECORDS</span><span>COMPLIANCE</span><span>SUPPORT</span>
+    </div>
+    <svg viewBox="0 0 1000 60" preserveAspectRatio="none">
+      <line x1="0" y1="45" x2="1000" y2="45" stroke="#D8DCD3" stroke-width="1"/>
+      <polyline points="0,45 380,45 400,15 420,50 440,45 620,45 640,20 660,50 680,45 1000,45"
+        fill="none" stroke="#1F4B41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
+<div class="wrap" id="credentials">
+  <section class="chart-section">
+    <div class="chart-label">Certification chart</div>
+    <div class="chart-grid">
+      <div class="chart-cell">
+        <div class="tag">01 — CLINICAL</div>
+        <div class="name">Diploma in Clinical Medicine</div>
+      </div>
+      <div class="chart-cell">
+        <div class="tag">02 — TELEHEALTH</div>
+        <div class="name">Telehealth Certification</div>
+      </div>
+      <div class="chart-cell">
+        <div class="tag">03 — ADMIN</div>
+        <div class="name">Certified Virtual Assistant (ALX Africa)</div>
+      </div>
+      <div class="chart-cell">
+        <div class="tag">04 — SAFETY</div>
+        <div class="name">Occupational Health &amp; Safety Certificate</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="skills-section">
+    <div class="chart-label">Tools &amp; skills</div>
+    <div class="pill-row">
+      <span class="pill pill-accent">Telehealth Support</span>
+      <span class="pill pill-accent">Medical Administrative Support</span>
+      <span class="pill pill-accent">Occupational Health &amp; Safety</span>
+      <span class="pill pill-accent">Healthcare Compliance</span>
+      <span class="pill">Patient Scheduling</span>
+      <span class="pill">Calendar Management</span>
+      <span class="pill">Email Management</span>
+      <span class="pill">Data Entry</span>
+      <span class="pill">Social Media Management</span>
+      <span class="pill">Google Workspace</span>
+      <span class="pill">Microsoft Office &amp; Excel</span>
+      <span class="pill">Asana</span>
+      <span class="pill">HubSpot</span>
+      <span class="pill">ChatGPT</span>
+      <span class="pill">Website Development</span>
+    </div>
+  </section>
+</div>
+  <section class="services">
+    <div class="section-head">
+      <h2>Four ways to work with me</h2>
+      <p>Each service draws on a different pairing of credentials and skills — pick the one that matches what you actually need help with.</p>
+    </div>
+
+    <div class="service-list">
+      <div class="service">
+        <div class="num">01</div>
+        <div>
+          <h3>Telehealth &amp; Medical VA</h3>
+          <div class="sub">Clinical + Telehealth + VA</div>
+        </div>
+        <ul>
+          <li>Patient intake, scheduling &amp; appointment reminders</li>
+          <li>Telehealth session coordination and follow-up</li>
+          <li>Inbox &amp; calendar management for clinicians</li>
+          <li>Medical terminology-aware data entry and records handling</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <div class="num">02</div>
+        <div>
+          <h3>Health Admin &amp; Data Support</h3>
+          <div class="sub">Clinical + VA</div>
+        </div>
+        <ul>
+          <li>Patient records organization and data entry</li>
+          <li>Research support for health content or clinics</li>
+          <li>Social media &amp; content management for health brands</li>
+          <li>Reporting and documentation cleanup</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <div class="num">03</div>
+        <div>
+          <h3>OHS Compliance Documentation</h3>
+          <div class="sub">Occupational Health &amp; Safety</div>
+        </div>
+        <ul>
+          <li>Safety policy &amp; procedure drafting</li>
+          <li>Compliance tracking calendars and certification logs</li>
+          <li>Training record management</li>
+          <li>Remote support for safety documentation audits</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <div class="num">04</div>
+        <div>
+          <h3>Websites &amp; Booking Tools</h3>
+          <div class="sub">Build &amp; Deploy</div>
+        </div>
+        <ul>
+          <li>Booking &amp; scheduling websites for clinics and safety consultancies</li>
+          <li>WhatsApp-integrated intake or ordering systems</li>
+          <li>Simple client portals and record-tracking dashboards</li>
+          <li>Deployment &amp; hosting setup (Netlify, Vercel, Supabase)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap" id="pricing">
+  <section class="pricing">
+    <div class="section-head">
+      <h2>Packages &amp; pricing</h2>
+      <p>Fixed starting points for the three health-focused services — message me to scope anything custom.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-tag">Telehealth &amp; Medical VA</div>
+        <h3>Care Coordination</h3>
+        <div class="price-amount">$8<span> / hr, 10-hr min block</span></div>
+        <ul>
+          <li>Patient intake &amp; appointment scheduling</li>
+          <li>Telehealth session coordination</li>
+          <li>Inbox &amp; calendar management</li>
+          <li>Weekly summary report</li>
+        </ul>
+        <a class="btn btn-primary" href="https://wa.me/260960361420?text=Hi%20Jacob%2C%20I%27m%20interested%20in%20the%20Care%20Coordination%20package.">Get started</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tag">Health Admin &amp; Data</div>
+        <h3>Records &amp; Reporting</h3>
+        <div class="price-amount">$180<span> / mo, part-time</span></div>
+        <ul>
+          <li>Patient records organization &amp; data entry</li>
+          <li>Research support for clinical or health content</li>
+          <li>Social media management for health brands</li>
+          <li>Monthly documentation cleanup</li>
+        </ul>
+        <a class="btn btn-primary" href="https://wa.me/260960361420?text=Hi%20Jacob%2C%20I%27m%20interested%20in%20the%20Records%20%26%20Reporting%20package.">Get started</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tag">Occupational Health &amp; Safety</div>
+        <h3>Compliance Essentials</h3>
+        <div class="price-amount">$250<span> / project</span></div>
+        <ul>
+          <li>Safety policy &amp; procedure drafting</li>
+          <li>Compliance tracking calendar setup</li>
+          <li>Training record system</li>
+          <li>One round of revisions</li>
+        </ul>
+        <a class="btn btn-primary" href="https://wa.me/260960361420?text=Hi%20Jacob%2C%20I%27m%20interested%20in%20the%20Compliance%20Essentials%20package.">Get started</a>
+      </div>
+    </div>
+    <div class="price-note">Rates are starting points and adjust with project scope. Custom hours, retainers, and website/booking-tool builds are quoted separately.</div>
+  </section>
+</div>
+
+<div class="about">
+  <div class="wrap">
+    <h2>Trained clinically. <em>Working</em> remotely, from Zambia — for clients anywhere.</h2>
+    <p>Most virtual assistants learn medical terminology on the job. I started there. My background spans a clinical medicine diploma, telehealth training, formal VA certification, and occupational health &amp; safety — so health-adjacent admin work doesn't need translation, just delegation.</p>
+  </div>
+</div>
+
+<div class="wrap" id="work">
+  <section class="experience">
+    <div class="section-head">
+      <h2>Selected work</h2>
+      <p>Sites, tools, and platforms built and deployed — several directly in the health space.</p>
+    </div>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-date">Health</div>
+        <div>
+          <div class="exp-role">Kwandu Care</div>
+          <div class="exp-org">Next.js Website</div>
+          <div class="exp-desc">Website for a Zambian home healthcare company — the closest existing proof point to the services on this page.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Health</div>
+        <div>
+          <div class="exp-role">MediTrack</div>
+          <div class="exp-org">Deployed Wireframe Prototype</div>
+          <div class="exp-desc">Automated drug redistribution platform, submitted to the AIMS SDGs Innovation Challenge.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Marketplace</div>
+        <div>
+          <div class="exp-role">Kwandu</div>
+          <div class="exp-org">Web Platform</div>
+          <div class="exp-desc">Student boarding house marketplace built for the Zambian market.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">SaaS</div>
+        <div>
+          <div class="exp-role">ResourceOS</div>
+          <div class="exp-org">Multi-tenant Platform</div>
+          <div class="exp-desc">White-label resource booking SaaS built for multiple client businesses.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Commerce</div>
+        <div>
+          <div class="exp-role">Zedstore</div>
+          <div class="exp-org">Digital Marketplace</div>
+          <div class="exp-desc">Digital product marketplace built with Zambian Kwacha as the base currency.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Transport</div>
+        <div>
+          <div class="exp-role">TransportOS Lite (Rayon)</div>
+          <div class="exp-org">Booking Platform</div>
+          <div class="exp-desc">Intercity bus booking platform with seat maps and third-party payment integration.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Local business</div>
+        <div>
+          <div class="exp-role">Luanshya Grill &amp; Jade's Blissful Cakes</div>
+          <div class="exp-org">Restaurant &amp; Catering Sites</div>
+          <div class="exp-desc">A restaurant site with WhatsApp-based ordering and a website for a Zambian catering business.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Education</div>
+        <div>
+          <div class="exp-role">Zambia Academy</div>
+          <div class="exp-org">Billing System</div>
+          <div class="exp-desc">School billing system built for a Zambian academy, in ZMW.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap" id="experience">
+  <section class="experience">
+    <div class="section-head">
+      <h2>Work history</h2>
+      <p>Remote and freelance administrative work, building toward the health-focused specialization above.</p>
+    </div>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-date">Jan 2020 — Jan 2022</div>
+        <div>
+          <div class="exp-role">Virtual Assistant</div>
+          <div class="exp-org">Volunteer</div>
+          <div class="exp-desc">Administrative support for small businesses and entrepreneurs — scheduling, email management, and client follow-ups. Managed social media scheduling and content organization, and compiled research into organized reports.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Jan 2019 — Jan 2020</div>
+        <div>
+          <div class="exp-role">Administrative Support Specialist</div>
+          <div class="exp-org">Freelance</div>
+          <div class="exp-desc">Document preparation, data entry, and file organization for client record-keeping. Managed social media scheduling and organized data into spreadsheets for analysis.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Jan 2018 — Jan 2019</div>
+        <div>
+          <div class="exp-role">Customer Support Virtual Assistant</div>
+          <div class="exp-org">Upwork</div>
+          <div class="exp-desc">Email and chat customer support, order processing and tracking, and customer database management to support marketing and communication.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap" id="contact">
+  <section class="contact">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Have a task that needs a clinical eye on it?</h2>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:jacobsikanyika14@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="https://wa.me/260960361420">WhatsApp</a>
+      <a class="btn btn-ghost" href="https://github.com/YOUR-GITHUB-USERNAME">View GitHub</a>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <footer>
+    <span>Jacob Sikanyika — Remote Health &amp; Compliance Admin</span>
+    <span>Based in Zambia</span>
+  </footer>
+</div>
+
+</body>
+</html>
